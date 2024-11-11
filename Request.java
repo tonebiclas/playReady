@@ -18,9 +18,9 @@ public class Request {
    public static void main(String args[]) {
       Vars.set("MAC", "AABBCCDDEEFF");
       Vars.set("MSPR_DEBUG", 1);
-      Vars.set("MSPR_FAKE_ROOT", 0);
       Vars.set("SECLEVEL", "SL2000");
       Vars.set("SERIAL", "DGBD0123456789ABC");
+      Vars.set("MSPR_FAKE_ROOT", 0);
       
       Device cur_dev = Device.cur_device();
       

@@ -70,7 +70,7 @@ public static final String TOKEN_TYPE_DEVICE_PRIVATE_KEY =
 then:
 
 ~~~
-C4437i1.java
+com\amazon\identity\auth\device\C4437i1.java
 HashMap mo2419a2 =
 abstractC4585f.mo2419a("com.amazon.identity.auth.device.credentials.AnonymousAccountCredentials.SHARED_PREFS",
 list);
@@ -79,26 +79,36 @@ list);
 then:
 
 ~~~
-storage\AbstractC4585f.java
-109:    public HashMap mo2419a(String str, List list) {
+com\amazon\identity\auth\device\C4437i1.java
+public static C4293b m1878a(AbstractC4585f abstractC4585f) {
 ~~~
 
 then:
 
-~~~java
-public HashMap mo2419a(String str, List list) {
-  HashMap hashMap = new HashMap();
-  Iterator it = list.iterator();
-  while (it.hasNext()) {
-      String str2 = (String) it.next();
-      hashMap.put(str2, mo2301c(str, str2));
+~~~
+com\amazon\identity\auth\device\C4437i1.java
+public final C4293b mo927a() {
+  C4293b c4293b = this.f5111f;
+  if (c4293b == null || TextUtils.isEmpty(c4293b.m1316a()) || TextUtils.isEmpty(this.f5111f.m1317b())) {
+      this.f5111f = m1878a(this.f5110e);
   }
-  return hashMap;
+  return this.f5111f;
 }
 ~~~
 
 then:
 
 ~~~java
-public abstract String mo2301c(String str, String str2);
+com\amazon\identity\auth\device\C4437i1.java
+this.f5110e = (
+   (InterfaceC4239a4) m2953a.getSystemService("dcp_data_storage_factory")
+).mo1183a();
+~~~
+
+then:
+
+~~~java
+com\amazon\identity\auth\device\C4696y9.java
+} else if ("dcp_data_storage_factory".equals(str)) {
+    obj = C4586g.m2425a(this);
 ~~~

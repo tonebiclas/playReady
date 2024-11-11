@@ -11,64 +11,6 @@ msprcp> extractsecrets mspr_binary\libstd_cai_client_drm_msplayready.so
 fail:
 
 ~~~
-> play -i com.tubitv -abi armeabi-v7a
-details[8] = 0 USD
-details[13][1][4] = 8.22.0
-details[13][1][16] = Nov 4, 2024
-details[13][1][17] = APK APK APK
-details[13][1][82][1][1] = 9 and up
-details[15][18] = https://tubitv.com/static/privacy
-downloads = 173.99 million
-name = Tubi: Free Movies & Live TV
-size = 75.82 megabyte
-version code = 851
-~~~
-
-fail:
-
-~~~
-> play -i com.hulu.plus
-details[8] = 0 USD
-details[13][1][4] = 5.9.1+15066-google
-details[13][1][16] = Oct 25, 2024
-details[13][1][17] = APK
-details[13][1][82][1][1] = 7.1 and up
-details[15][18] = https://www.hulu.com/privacy
-downloads = 95.44 million
-name = Hulu: Stream TV shows & movies
-size = 19.62 megabyte
-version code = 5015066
-~~~
-
-next:
-
-~~~
-> play -i com.hulu.livingroomplus -abi armeabi-v7a -leanback
-details[8] = 0 USD
-details[13][1][4] = 5EEC9D81P3.9.846
-details[13][1][16] = Aug 6, 2024
-details[13][1][17] = APK APK APK
-details[13][1][82][1][1] = 4.4 and up
-details[15][18] = https://www.hulu.com/privacy
-downloads = 20.39 million
-name = Hulu for Android TV
-size = 47.67 megabyte
-version code = 3009846
-~~~
-
-pass:
-
-~~~
-> rg -a CHAI\b
-com.hulu.livingroomplus-config.armeabi_v7a-3009846\lib\armeabi-v7a\libwkf_support.so
-163933:CHAI<CERT�
-�U� ��?��^P�����N7䱣�k˱�/����l�RG�{��S4Hulu LLCWiiUWiiU�@`��ϡ-��s(�*��f���{��r!�#���g�DO��L��G��8��6�J�t���J���C��Lؓ��Lh#��C�ͪ�
-�� �C�[��W'�o��YQy��h`M�X��,��
-~~~
-
-fail:
-
-~~~
 > play -i com.wbd.stream
 details[8] = 0 USD
 details[13][1][4] = 5.0.0.67
@@ -251,6 +193,50 @@ fail:
 
 https://apkcombo.com/draken-film/com.draken.android
 
+## hulu
+
+fail:
+
+~~~
+> play -i com.hulu.plus
+details[8] = 0 USD
+details[13][1][4] = 5.9.1+15066-google
+details[13][1][16] = Oct 25, 2024
+details[13][1][17] = APK
+details[13][1][82][1][1] = 7.1 and up
+details[15][18] = https://www.hulu.com/privacy
+downloads = 95.44 million
+name = Hulu: Stream TV shows & movies
+size = 19.62 megabyte
+version code = 5015066
+~~~
+
+next:
+
+~~~
+> play -i com.hulu.livingroomplus -abi armeabi-v7a -leanback
+details[8] = 0 USD
+details[13][1][4] = 5EEC9D81P3.9.846
+details[13][1][16] = Aug 6, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 4.4 and up
+details[15][18] = https://www.hulu.com/privacy
+downloads = 20.39 million
+name = Hulu for Android TV
+size = 47.67 megabyte
+version code = 3009846
+~~~
+
+pass:
+
+~~~
+> rg -a CHAI\b
+com.hulu.livingroomplus-config.armeabi_v7a-3009846\lib\armeabi-v7a\libwkf_support.so
+163933:CHAI<CERT�
+�U� ��?��^P�����N7䱣�k˱�/����l�RG�{��S4Hulu LLCWiiUWiiU�@`��ϡ-��s(�*��f���{��r!�#���g�DO��L��G��8��6�J�t���J���C��Lؓ��Lh#��C�ͪ�
+�� �C�[��W'�o��YQy��h`M�X��,��
+~~~
+
 ## pluto
 
 fail:
@@ -285,4 +271,22 @@ downloads = 750.19 thousand
 name = The Roku Channel
 size = 9.94 megabyte
 version code = 10019
+~~~
+
+## tubitv
+
+fail:
+
+~~~
+> play -i com.tubitv -abi armeabi-v7a
+details[8] = 0 USD
+details[13][1][4] = 8.22.0
+details[13][1][16] = Nov 4, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 9 and up
+details[15][18] = https://tubitv.com/static/privacy
+downloads = 173.99 million
+name = Tubi: Free Movies & Live TV
+size = 75.82 megabyte
+version code = 851
 ~~~
