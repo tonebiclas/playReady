@@ -1,100 +1,10 @@
 # extractsecrets
 
-we need to do this:
-
 ~~~
 msprcp> extractsecrets mspr_binary\libstd_cai_client_drm_msplayready.so
 ~~~
 
 <https://security-explorations.com/materials/mspr_toolkit_README.md.txt>
-
-fail:
-
-~~~
-> play -i com.wbd.stream
-details[8] = 0 USD
-details[13][1][4] = 5.0.0.67
-details[13][1][16] = Oct 23, 2024
-details[13][1][17] = APK APK APK APK
-details[13][1][82][1][1] = 5.0 and up
-details[15][18] = https://www.max.com/privacy
-downloads = 83.80 million
-name = Max: Stream HBO, TV, & Movies
-size = 114.30 megabyte
-version code = 35354161
-~~~
-
-fail:
-
-~~~
-> play -i com.plexapp.android
-details[8] = 0 USD
-details[13][1][4] = 10.23.0.1627
-details[13][1][16] = Oct 21, 2024
-details[13][1][17] = APK APK APK APK
-details[13][1][82][1][1] = 6.0 and up
-details[15][18] = https://plex.tv/legal
-downloads = 66.85 million
-name = Plex: Stream Movies & TV
-size = 90.43 megabyte
-version code = 963667377
-~~~
-
-fail:
-
-~~~
-> play -i com.cbs.app
-details[8] = 0 USD
-details[13][1][4] = 15.0.46
-details[13][1][16] = Oct 30, 2024
-details[13][1][17] = APK APK APK
-details[13][1][82][1][1] = 5.0 and up
-details[15][18] = http://legalterms.cbsinteractive.com/privacy
-downloads = 36.54 million
-name = Paramount+
-size = 89.49 megabyte
-version code = 211504644
-~~~
-
-fail:
-
-https://apkmirror.com/apk/itv-plc/itv-hub
-
-fail:
-
-~~~
->  play -i com.nbcuni.nbc
-details[8] = 0 USD
-details[13][1][4] = 9.13.1
-details[13][1][16] = Oct 16, 2024
-details[13][1][17] = APK APK APK
-details[13][1][82][1][1] = 5.0 and up
-details[15][18] = https://www.nbcuniversal.com/privacy?intake=NBC_Entertainment
-downloads = 16.54 million
-name = The NBC App - Stream TV Shows
-size = 73.71 megabyte
-version code = 2000005553
-~~~
-
-fail:
-
-~~~
-> play -i com.mubi
-details[8] = 0 USD
-details[13][1][4] = 58.0
-details[13][1][16] = Oct 28, 2024
-details[13][1][17] = APK APK APK APK
-details[13][1][82][1][1] = 5.1 and up
-details[15][18] = https://mubi.com/privacy_policy
-downloads = 5.51 million
-name = MUBI: Curated Cinema
-size = 26.12 megabyte
-version code = 29145342
-~~~
-
-fail:
-
-https://apkmirror.com/apk/rakuten-tv/rakuten-tv-movies-tv-series-android-tv
 
 fail:
 
@@ -237,6 +147,102 @@ com.hulu.livingroomplus-config.armeabi_v7a-3009846\lib\armeabi-v7a\libwkf_suppor
 �� �C�[��W'�o��YQy��h`M�X��,��
 ~~~
 
+## itv
+
+fail:
+
+https://apkmirror.com/apk/itv-plc/itv-hub
+
+## max
+
+fail:
+
+~~~
+> play -i com.wbd.stream
+details[8] = 0 USD
+details[13][1][4] = 5.0.0.67
+details[13][1][16] = Oct 23, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.max.com/privacy
+downloads = 83.80 million
+name = Max: Stream HBO, TV, & Movies
+size = 114.30 megabyte
+version code = 35354161
+~~~
+
+## mubi
+
+fail:
+
+~~~
+> play -i com.mubi
+details[8] = 0 USD
+details[13][1][4] = 58.0
+details[13][1][16] = Oct 28, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.1 and up
+details[15][18] = https://mubi.com/privacy_policy
+downloads = 5.51 million
+name = MUBI: Curated Cinema
+size = 26.12 megabyte
+version code = 29145342
+~~~
+
+## nbc
+
+fail:
+
+~~~
+>  play -i com.nbcuni.nbc
+details[8] = 0 USD
+details[13][1][4] = 9.13.1
+details[13][1][16] = Oct 16, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.nbcuniversal.com/privacy?intake=NBC_Entertainment
+downloads = 16.54 million
+name = The NBC App - Stream TV Shows
+size = 73.71 megabyte
+version code = 2000005553
+~~~
+
+## paramount
+
+fail:
+
+~~~
+> play -i com.cbs.app
+details[8] = 0 USD
+details[13][1][4] = 15.0.46
+details[13][1][16] = Oct 30, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = http://legalterms.cbsinteractive.com/privacy
+downloads = 36.54 million
+name = Paramount+
+size = 89.49 megabyte
+version code = 211504644
+~~~
+
+## plex
+
+fail:
+
+~~~
+> play -i com.plexapp.android
+details[8] = 0 USD
+details[13][1][4] = 10.23.0.1627
+details[13][1][16] = Oct 21, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 6.0 and up
+details[15][18] = https://plex.tv/legal
+downloads = 66.85 million
+name = Plex: Stream Movies & TV
+size = 90.43 megabyte
+version code = 963667377
+~~~
+
 ## pluto
 
 fail:
@@ -254,6 +260,12 @@ name = Pluto TV: Watch Free Movies/TV
 size = 55.33 megabyte
 version code = 410400212
 ~~~
+
+## rakuten
+
+fail:
+
+https://apkmirror.com/apk/rakuten-tv/rakuten-tv-movies-tv-series-android-tv
 
 ## roku
 
