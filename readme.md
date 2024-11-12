@@ -11,3 +11,8 @@
 https://wikipedia.org/wiki/PlayReady
 
 <https://packetstormsecurity.com/files/178464/mspr_toolkit.zip>
+
+## WARNING
+
+CURRENTLY NO PUBLIC METHOD EXISTS TO DUMP/EXTRACT A PLAYREADY DEVICE, SO ONCE
+ALL THE PUBLIC DEVICES ARE REVOKED, THIS REPO WILL NO LONGER WORK
