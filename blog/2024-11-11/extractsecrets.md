@@ -6,48 +6,6 @@ msprcp> extractsecrets mspr_binary\libstd_cai_client_drm_msplayready.so
 
 <https://security-explorations.com/materials/mspr_toolkit_README.md.txt>
 
-fail:
-
-https://apkmirror.com/apk/bell-media-inc/ctv
-
-fail:
-
-https://apkmirror.com/apk/bell-media-inc/ctv-android-tv
-
-fail:
-
-~~~
-> play -i be.rtbf.auvio
-details[8] = 0 USD
-details[13][1][4] = 3.1.42
-details[13][1][16] = Jun 26, 2024
-details[13][1][17] = APK APK APK
-details[13][1][82][1][1] = 8.0 and up
-details[15][18] = https://www.rtbf.be/charte/detail
-downloads = 1.77 million
-name = RTBF Auvio : direct et replay
-size = 48.09 megabyte
-version code = 1301042
-~~~
-
-fail:
-
-~~~
-> play -i com.amcplus.amcfullepisodes
-details[8] = 0 USD
-details[13][1][4] = 1.8.21.2
-details[13][1][16] = Oct 23, 2024
-details[13][1][17] = APK APK APK APK
-details[13][1][82][1][1] = 5.0 and up
-details[15][18] = https://www.amcnetworks.com/privacy-policy/
-downloads = 1.66 million
-name = AMC+
-size = 45.00 megabyte
-version code = 172970545
-~~~
-
----------------------------------------------------------------------------------
-
 ## amazon
 
 ~~~
@@ -73,35 +31,45 @@ lib\armeabi-v7a\libAIVPlayReadyLicensing.so
 . h|.f}'w�@ޠW�`�Lm嗲�{�        y������q7     ��<��O����R�o�'K`��xQ~h��� ����r�_�|��8ee����:U��+��~�(8j���S3�;}��>��B&�)�V�����6�0��N�U�"��X7CHAI\CERT�,X�LA������4���/��Ч?eۦ�oF�4�EjTO��,�G�:O�y�������`5,��������_��^�_��(��3�
 ~~~
 
+## amc
+
+fail:
+
+~~~
+> play -i com.amcplus.amcfullepisodes
+details[8] = 0 USD
+details[13][1][4] = 1.8.21.2
+details[13][1][16] = Oct 23, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.amcnetworks.com/privacy-policy/
+downloads = 1.66 million
+name = AMC+
+size = 45.00 megabyte
+version code = 172970545
+~~~
+
+fail:
+
+~~~
+> play -i com.amcplus.amcandroidtv -leanback
+details[8] = 0 USD
+details[13][1][4] = 1.8.21.1
+details[13][1][16] = Oct 18, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.amcnetworks.com/privacy-policy/
+downloads = 584.57 thousand
+name = AMC+
+size = 39.43 megabyte
+version code = 172926390
+~~~
+
 ## cinemember
 
 fail:
 
 https://apkpure.com/cinemember/nl.peoplesplayground.audienceplayer.cinemember
-
-## criterionchannel
-
-fail:
-
-~~~
-> play -i com.criterionchannel
-details[8] = 0 USD
-details[13][1][4] = 8.806.1
-details[13][1][16] = Oct 23, 2024
-details[13][1][17] = APK APK APK APK
-details[13][1][82][1][1] = 5.0 and up
-details[15][18] = https://www.criterionchannel.com/privacy
-downloads = 210.95 thousand
-name = The Criterion Channel
-size = 67.33 megabyte
-version code = 11280
-~~~
-
-## draken
-
-fail:
-
-https://apkcombo.com/draken-film/com.draken.android
 
 ## hulu
 
@@ -147,11 +115,51 @@ com.hulu.livingroomplus-config.armeabi_v7a-3009846\lib\armeabi-v7a\libwkf_suppor
 �� �C�[��W'�o��YQy��h`M�X��,��
 ~~~
 
+## draken
+
+fail:
+
+https://apkcombo.com/draken-film/com.draken.android
+
+## ctv
+
+fail:
+
+https://apkmirror.com/apk/bell-media-inc/ctv
+
+fail:
+
+https://apkmirror.com/apk/bell-media-inc/ctv-android-tv
+
+## criterionchannel
+
+fail:
+
+~~~
+> play -i com.criterionchannel
+details[8] = 0 USD
+details[13][1][4] = 8.806.1
+details[13][1][16] = Oct 23, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.criterionchannel.com/privacy
+downloads = 210.95 thousand
+name = The Criterion Channel
+size = 67.33 megabyte
+version code = 11280
+~~~
+
+no TV version
+
 ## itv
 
 fail:
 
 https://apkmirror.com/apk/itv-plc/itv-hub
+
+fail:
+
+https://apkmirror.com/apk/itv-plc/itv-hub-your-tv-player-watch-live-on-demand-android-tv
 
 ## max
 
@@ -170,6 +178,24 @@ name = Max: Stream HBO, TV, & Movies
 size = 114.30 megabyte
 version code = 35354161
 ~~~
+
+fail:
+
+~~~
+> play -i com.wbd.stream -leanback
+details[8] = 0 USD
+details[13][1][4] = 5.0.0.70
+details[13][1][16] = Oct 23, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.max.com/privacy
+downloads = 84.06 million
+name = Max: Stream HBO, TV, & Movies
+size = 141.48 megabyte
+version code = 1705000070
+~~~
+
+---------------------------------------------------------------------------------
 
 ## mubi
 
@@ -283,6 +309,24 @@ downloads = 750.19 thousand
 name = The Roku Channel
 size = 9.94 megabyte
 version code = 10019
+~~~
+
+## rtbf
+
+fail:
+
+~~~
+> play -i be.rtbf.auvio
+details[8] = 0 USD
+details[13][1][4] = 3.1.42
+details[13][1][16] = Jun 26, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 8.0 and up
+details[15][18] = https://www.rtbf.be/charte/detail
+downloads = 1.77 million
+name = RTBF Auvio : direct et replay
+size = 48.09 megabyte
+version code = 1301042
 ~~~
 
 ## tubitv
