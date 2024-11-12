@@ -2,7 +2,6 @@
 
 ## github.com
 
-- <https://github.com/HbbTV-Association/ReferenceApplication/blob/master/tools/test/laurl_pr.php>
 - https://github.com/Dreamer269/Unofficial-DRM/tree/main/modules/playready
 - https://github.com/Newbiect/Unofficial-DRM/tree/main/modules/playready
 

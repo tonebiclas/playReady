@@ -71,6 +71,42 @@ fail:
 
 https://apkpure.com/cinemember/nl.peoplesplayground.audienceplayer.cinemember
 
+## criterionchannel
+
+fail:
+
+~~~
+> play -i com.criterionchannel
+details[8] = 0 USD
+details[13][1][4] = 8.806.1
+details[13][1][16] = Oct 23, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.criterionchannel.com/privacy
+downloads = 210.95 thousand
+name = The Criterion Channel
+size = 67.33 megabyte
+version code = 11280
+~~~
+
+no TV version
+
+## ctv
+
+fail:
+
+https://apkmirror.com/apk/bell-media-inc/ctv
+
+fail:
+
+https://apkmirror.com/apk/bell-media-inc/ctv-android-tv
+
+## draken
+
+fail:
+
+https://apkcombo.com/draken-film/com.draken.android
+
 ## hulu
 
 fail:
@@ -108,48 +144,11 @@ version code = 3009846
 pass:
 
 ~~~
-> rg -a CHAI\b
 com.hulu.livingroomplus-config.armeabi_v7a-3009846\lib\armeabi-v7a\libwkf_support.so
 163933:CHAI<CERT�
 �U� ��?��^P�����N7䱣�k˱�/����l�RG�{��S4Hulu LLCWiiUWiiU�@`��ϡ-��s(�*��f���{��r!�#���g�DO��L��G��8��6�J�t���J���C��Lؓ��Lh#��C�ͪ�
 �� �C�[��W'�o��YQy��h`M�X��,��
 ~~~
-
-## draken
-
-fail:
-
-https://apkcombo.com/draken-film/com.draken.android
-
-## ctv
-
-fail:
-
-https://apkmirror.com/apk/bell-media-inc/ctv
-
-fail:
-
-https://apkmirror.com/apk/bell-media-inc/ctv-android-tv
-
-## criterionchannel
-
-fail:
-
-~~~
-> play -i com.criterionchannel
-details[8] = 0 USD
-details[13][1][4] = 8.806.1
-details[13][1][16] = Oct 23, 2024
-details[13][1][17] = APK APK APK APK
-details[13][1][82][1][1] = 5.0 and up
-details[15][18] = https://www.criterionchannel.com/privacy
-downloads = 210.95 thousand
-name = The Criterion Channel
-size = 67.33 megabyte
-version code = 11280
-~~~
-
-no TV version
 
 ## itv
 
@@ -195,8 +194,6 @@ size = 141.48 megabyte
 version code = 1705000070
 ~~~
 
----------------------------------------------------------------------------------
-
 ## mubi
 
 fail:
@@ -215,6 +212,8 @@ size = 26.12 megabyte
 version code = 29145342
 ~~~
 
+no TV version
+
 ## nbc
 
 fail:
@@ -231,6 +230,22 @@ downloads = 16.54 million
 name = The NBC App - Stream TV Shows
 size = 73.71 megabyte
 version code = 2000005553
+~~~
+
+fail:
+
+~~~
+> play -i com.nbcuni.nbc.androidtv -leanback
+details[8] = 0 USD
+details[13][1][4] = 9.13.1
+details[13][1][16] = Oct 16, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://www.nbcuniversal.com/privacy?intake=NBC_Entertainment
+downloads = 1.49 million
+name = NBC - Watch Full TV Episodes
+size = 84.40 megabyte
+version code = 2000003974
 ~~~
 
 ## paramount
@@ -251,6 +266,22 @@ size = 89.49 megabyte
 version code = 211504644
 ~~~
 
+fail:
+
+~~~
+> play -i com.cbs.ott -leanback
+details[8] = 0 USD
+details[13][1][4] = 15.0.46
+details[13][1][16] = Oct 30, 2024
+details[13][1][17] = APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = http://legalterms.cbsinteractive.com/privacy
+downloads = 12.21 million
+name = Paramount+
+size = 90.84 megabyte
+version code = 211504645
+~~~
+
 ## plex
 
 fail:
@@ -268,6 +299,8 @@ name = Plex: Stream Movies & TV
 size = 90.43 megabyte
 version code = 963667377
 ~~~
+
+no TV app
 
 ## pluto
 
@@ -287,7 +320,27 @@ size = 55.33 megabyte
 version code = 410400212
 ~~~
 
+fail:
+
+~~~
+> play -i tv.pluto.android -leanback
+details[8] = 0 USD
+details[13][1][4] = 5.49.0-leanback
+details[13][1][16] = Oct 29, 2024
+details[13][1][17] = APK APK APK APK
+details[13][1][82][1][1] = 5.0 and up
+details[15][18] = https://corporate.pluto.tv/privacy-policy/
+downloads = 220.33 million
+name = Pluto TV: Watch Free Movies/TV
+size = 55.27 megabyte
+version code = 510400212
+~~~
+
 ## rakuten
+
+fail:
+
+https://apkmirror.com/apk/rakuten-tv/rakuten-tv-movies-tv-series
 
 fail:
 
@@ -311,6 +364,8 @@ size = 9.94 megabyte
 version code = 10019
 ~~~
 
+no phone app
+
 ## rtbf
 
 fail:
@@ -329,6 +384,8 @@ size = 48.09 megabyte
 version code = 1301042
 ~~~
 
+no TV app
+
 ## tubitv
 
 fail:
@@ -346,3 +403,5 @@ name = Tubi: Free Movies & Live TV
 size = 75.82 megabyte
 version code = 851
 ~~~
+
+no TV app
