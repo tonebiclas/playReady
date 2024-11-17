@@ -1,20 +1,20 @@
 package playReady
 
 import (
-   "fmt"
+   "log/slog"
    "os"
    "testing"
 )
 
 func TestBcert(t *testing.T) {
-   data, err := os.ReadFile("../secrets/g1")
+   buf, err := os.ReadFile("../secrets/g1")
    if err != nil {
       t.Fatal(err)
    }
    var bcert bcert_chain
-   _, err = bcert.decode(data)
+   slog.SetLogLoggerLevel(slog.LevelDebug)
+   err = bcert.read(buf)
    if err != nil {
       t.Fatal(err)
    }
-   fmt.Printf("%+v\n", bcert)
 }
