@@ -4,10 +4,11 @@ import (
    "bytes"
    "crypto/ecdh"
    "net/http"
+   "os"
    "playReady/etree"
 )
 
-func digest_value() (string, error) {
+func DigestValue() (string, error) {
    key, err := os.ReadFile("zgpriv.dat")
    if err != nil {
       return "", err
@@ -16,36 +17,19 @@ func digest_value() (string, error) {
    if err != nil {
       return "", err
    }
+   _ = encryption_key
    signing_key, err := ecdh.P256().NewPrivateKey(key)
    if err != nil {
       return "", err
    }
+   _ = signing_key
    group_key, err := ecdh.P256().NewPrivateKey(key)
    if err != nil {
       return "", err
    }
-   BCert = Struct(
-      "signature" / Const(b"CERT"),
-      "version" / Int32ub,
-      "total_length" / Int32ub,
-      "certificate_length" / Int32ub,
-      "attributes" / GreedyRange(Attribute)
-   )
-   BCertChain = Struct(
-      "signature" / Const(b"CHAI"),
-      "version" / Int32ub,
-      "total_length" / Int32ub,
-      "flags" / Int32ub,
-      "certificate_count" / Int32ub,
-      "certificates" / GreedyRange(BCert)
-   )
-   cert_chain = _BCertStructs.BCertChain
-   return cls(
-      parsed_bcert_chain=cert_chain.parse(data),
-      bcert_chain_obj=cert_chain
-   )
-   with Path(path).open(mode="rb") as f:
-      return cls.loads(f.read())
+   _ = group_key
+   return "", nil
+   /*
    certificate_chain = CertificateChain.load(group_certificate)
    new_certificate = Certificate.new_leaf_cert(
       group_key=group_key,
@@ -76,6 +60,7 @@ func digest_value() (string, error) {
    la_hash_obj.update(la_content.encode())
    la_hash = la_hash_obj.digest()
    return base64.b64encode(la_hash).decode()
+   */
 }
 
 func license() (*http.Response, error) {
