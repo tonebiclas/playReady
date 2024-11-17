@@ -6,7 +6,113 @@ import (
    "log/slog"
 )
 
+// DrmBCertBasicInfo = Struct(
+//    "cert_id" / Bytes(16),
+//    "security_level" / Int32ub,
+//    "flags" / Int32ub,
+//    "cert_type" / Int32ub,
+//    "public_key_digest" / Bytes(32),
+//    "expiration_date" / Int32ub,
+//    "client_id" / Bytes(16)
+// )
+type cert_basic_info struct {
+   CertId [16]byte
+   SecurityLevel uint32
+   Flags uint32
+   CertType uint32
+   PublicKeyDigest [32]byte
+   ExpirationDate uint32
+   ClientId [16]byte
+}
+
 func new_leaf_cert() {
+   basic_info = Container(
+      cert_id=cert_id,
+      security_level=security_level,
+      flags=0,
+      cert_type=2,
+      public_key_digest=signing_key.public_sha256_digest(),
+      expiration_date=expiry,
+      client_id=client_id
+   )
+   basic_info_attribute = Container(
+      flags=1,
+      tag=1,
+      length=len(_BCertStructs.DrmBCertBasicInfo.build(basic_info)) + 8,
+      attribute=basic_info
+   )
+   device_info = Container(
+      max_license=max_license,
+      max_header=max_header,
+      max_chain_depth=max_chain_depth
+   )
+   device_info_attribute = Container(
+      flags=1,
+      tag=4,
+      length=len(_BCertStructs.DrmBCertDeviceInfo.build(device_info)) + 8,
+      attribute=device_info
+   )
+   feature = Container(
+      feature_count=3,
+      features=ListContainer([
+          4,  # SECURE_CLOCK
+          9,  # REVOCATION_LIST_FEATURE
+          13  # SUPPORTS_PR3_FEATURES
+      ])
+   )
+   feature_attribute = Container(
+      flags=1,
+      tag=5,
+      length=len(_BCertStructs.DrmBCertFeatureInfo.build(feature)) + 8,
+      attribute=feature
+   )
+   cert_key_sign = Container(
+      type=1,
+      length=512,  # bits
+      flags=0,
+      key=signing_key.public_bytes(),
+      usages_count=1,
+      usages=ListContainer([
+          1
+      ])
+   )
+   cert_key_encrypt = Container(
+      type=1,
+      length=512,  # bits
+      flags=0,
+      key=encryption_key.public_bytes(),
+      usages_count=1,
+      usages=ListContainer([
+          2
+      ])
+   )
+   key_info = Container(
+      key_count=2,
+      cert_keys=ListContainer([
+          cert_key_sign,
+          cert_key_encrypt
+      ])
+   )
+   key_info_attribute = Container(
+      flags=1,
+      tag=6,
+      length=len(_BCertStructs.DrmBCertKeyInfo.build(key_info)) + 8,
+      attribute=key_info
+   )
+   manufacturer_info = parent.get_certificate(0).get_attribute(7)
+   new_bcert_container = Container(
+      signature=b"CERT",
+      version=1,
+      total_length=0,  # filled at a later time
+      certificate_length=0,  # filled at a later time
+      attributes=ListContainer([
+          basic_info_attribute,
+          device_info_attribute,
+          feature_attribute,
+          key_info_attribute,
+          manufacturer_info,
+      ])
+   )
    sign_payload = _BCertStructs.BCert.build(new_bcert_container)
    hash_obj = SHA256.new(sign_payload)
    signer = DSS.new(group_key.key, 'fips-186-3')
@@ -24,19 +130,6 @@ func new_leaf_cert() {
       length=len(_BCertStructs.DrmBCertSignatureInfo.build(signature_info)) + 8,
       attribute=signature_info
    )
-   new_bcert_container = Container(
-      signature=b"CERT",
-      version=1,
-      total_length=0,  # filled at a later time
-      certificate_length=0,  # filled at a later time
-      attributes=ListContainer([
-          basic_info_attribute,
-          device_info_attribute,
-          feature_attribute,
-          key_info_attribute,
-          manufacturer_info,
-      ])
-   )
    payload = _BCertStructs.BCert.build(new_bcert_container)
    new_bcert_container.certificate_length = len(payload)
    new_bcert_container.total_length = len(payload) + 144  # signature length
@@ -44,29 +137,10 @@ func new_leaf_cert() {
    return cls(new_bcert_container)
 }
 
-// DrmBCertBasicInfo = Struct(
-//    "cert_id" / Bytes(16),
-//    "security_level" / Int32ub,
-//    "flags" / Int32ub,
-//    "cert_type" / Int32ub,
-//    "public_key_digest" / Bytes(32),
-//    "expiration_date" / Int32ub,
-//    "client_id" / Bytes(16)
-// )
-type basic_info struct {
-   CertId [16]byte
-   SecurityLevel uint32
-   Flags uint32
-   CertType uint32
-   PublicKeyDigest [32]byte
-   ExpirationDate uint32
-   ClientId [16]byte
-}
-
-func (b *bcert) info() (*basic_info, error) {
+func (b *bcert) info() (*cert_basic_info, error) {
    for _, attr := range b.Attributes {
       if attr.header.Tag == 1 {
-         info := &basic_info{}
+         info := &cert_basic_info{}
          _, err := binary.Decode(attr.Attribute, binary.BigEndian, info)
          if err != nil {
             return nil, err
