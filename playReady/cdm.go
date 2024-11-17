@@ -9,36 +9,44 @@ import (
 )
 
 func DigestValue() (string, error) {
-   key, err := os.ReadFile("zgpriv.dat")
+   data, err := os.ReadFile("zgpriv.dat")
    if err != nil {
       return "", err
    }
-   encryption_key, err := ecdh.P256().NewPrivateKey(key)
+   encryption_key, err := ecdh.P256().NewPrivateKey(data)
    if err != nil {
       return "", err
    }
    _ = encryption_key
-   signing_key, err := ecdh.P256().NewPrivateKey(key)
+   signing_key, err := ecdh.P256().NewPrivateKey(data)
    if err != nil {
       return "", err
    }
    _ = signing_key
-   group_key, err := ecdh.P256().NewPrivateKey(key)
+   group_key, err := ecdh.P256().NewPrivateKey(data)
    if err != nil {
       return "", err
    }
    _ = group_key
+   data, err = os.ReadFile("bgroupcert.dat")
+   if err != nil {
+      return "", err
+   }
+   var certificate_chain bcert_chain
+   err = certificate_chain.read(data)
+   if err != nil {
+      return "", err
+   }
    return "", nil
    /*
-   certificate_chain = CertificateChain.load(group_certificate)
    new_certificate = Certificate.new_leaf_cert(
       group_key=group_key,
       parent=certificate_chain
-      security_level=certificate_chain.get_security_level(),
       client_id=get_random_bytes(16),
       cert_id=get_random_bytes(16),
       signing_key=signing_key,
       encryption_key=encryption_key,
+      security_level=certificate_chain.get_security_level(),
    )
    certificate_chain.prepend(new_certificate)
    device = Device(

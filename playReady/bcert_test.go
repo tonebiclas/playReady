@@ -1,6 +1,7 @@
 package playReady
 
 import (
+   "fmt"
    "log/slog"
    "os"
    "testing"
@@ -16,5 +17,12 @@ func TestBcert(t *testing.T) {
    err = bcert.read(buf)
    if err != nil {
       t.Fatal(err)
+   }
+   for _, cert := range bcert.Certificates {
+      info, err := cert.info()
+      if err != nil {
+         t.Fatal(err)
+      }
+      fmt.Printf("%+v\n", info)
    }
 }
