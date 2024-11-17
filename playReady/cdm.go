@@ -37,6 +37,11 @@ func DigestValue() (string, error) {
    if err != nil {
       return "", err
    }
+   info, err := certificate_chain.Certificates[0].info()
+   if err != nil {
+      return "", err
+   }
+   _ = info
    return "", nil
    /*
    new_certificate = Certificate.new_leaf_cert(

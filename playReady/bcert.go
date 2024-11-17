@@ -39,6 +39,43 @@ func (b *bcert) info() (*basic_info, error) {
    return nil, errors.New("bcert.info")
 }
 
+// Attribute = Struct(
+//   "flags" / Int16ub,
+//   "tag" / Int16ub,
+//   "length" / Int32ub,
+//   "attribute" / Switch(
+//       lambda this_: this_.tag,
+//       {
+//           1: DrmBCertBasicInfo,
+//           2: DrmBCertDomainInfo,
+//           3: DrmBCertPCInfo,
+//           4: DrmBCertDeviceInfo,
+//           5: DrmBCertFeatureInfo,
+//           6: DrmBCertKeyInfo,
+//           7: DrmBCertManufacturerInfo,
+//           8: DrmBCertSignatureInfo,
+//           9: DrmBCertSilverlightInfo,
+//           10: DrmBCertMeteringInfo,
+//           11: DrmBCertExtDataSignKeyInfo,
+//           12: BCertExtDataContainer,
+//           13: DrmBCertExtDataSignature,
+//           14: Bytes(this.length - 8),
+//           15: DrmBCertServerInfo,
+//           16: DrmBcertSecurityVersion,
+//           17: DrmBcertSecurityVersion
+//       },
+//       default=Bytes(this.length - 8)
+//   )
+// )
+type attribute struct {
+   header struct {
+      Flags uint16
+      Tag uint16
+      Length uint32
+   }
+   Attribute []byte
+}
+
 // BCertChain = Struct(
 //    "signature" / Const(b"CHAI"),
 //    "version" / Int32ub,
@@ -128,40 +165,122 @@ type bcert struct {
    Attributes []attribute
 }
 
-// Attribute = Struct(
-//   "flags" / Int16ub,
-//   "tag" / Int16ub,
-//   "length" / Int32ub,
-//   "attribute" / Switch(
-//       lambda this_: this_.tag,
-//       {
-//           1: DrmBCertBasicInfo,
-//           2: DrmBCertDomainInfo,
-//           3: DrmBCertPCInfo,
-//           4: DrmBCertDeviceInfo,
-//           5: DrmBCertFeatureInfo,
-//           6: DrmBCertKeyInfo,
-//           7: DrmBCertManufacturerInfo,
-//           8: DrmBCertSignatureInfo,
-//           9: DrmBCertSilverlightInfo,
-//           10: DrmBCertMeteringInfo,
-//           11: DrmBCertExtDataSignKeyInfo,
-//           12: BCertExtDataContainer,
-//           13: DrmBCertExtDataSignature,
-//           14: Bytes(this.length - 8),
-//           15: DrmBCertServerInfo,
-//           16: DrmBcertSecurityVersion,
-//           17: DrmBcertSecurityVersion
-//       },
-//       default=Bytes(this.length - 8)
-//   )
-// )
-type attribute struct {
-   header struct {
-      Flags uint16
-      Tag uint16
-      Length uint32
-   }
-   Attribute []byte
-}
+/*
+def new_leaf_cert(
+      cls,
+      cert_id: bytes,
+      security_level: int,
+      client_id: bytes,
+      signing_key: ECCKey,
+      encryption_key: ECCKey,
+      group_key: ECCKey,
+      parent: CertificateChain,
+      expiry: int = 0xFFFFFFFF,
+      max_license: int = 10240,
+      max_header: int = 15360,
+      max_chain_depth: int = 2
+) -> Certificate:
+  if not cert_id:
+      raise ValueError("Certificate ID is required")
+  if not client_id:
+      raise ValueError("Client ID is required")
 
+
+  basic_info = Container(
+      cert_id=cert_id,
+      security_level=security_level,
+      flags=0,
+      cert_type=2,
+      public_key_digest=signing_key.public_sha256_digest(),
+      expiration_date=expiry,
+      client_id=client_id
+  )
+  basic_info_attribute = Container(
+      flags=1,
+      tag=1,
+      length=len(_BCertStructs.DrmBCertBasicInfo.build(basic_info)) + 8,
+      attribute=basic_info
+  )
+
+
+  device_info = Container(
+      max_license=max_license,
+      max_header=max_header,
+      max_chain_depth=max_chain_depth
+  )
+  device_info_attribute = Container(
+      flags=1,
+      tag=4,
+      length=len(_BCertStructs.DrmBCertDeviceInfo.build(device_info)) + 8,
+      attribute=device_info
+  )
+
+
+  feature = Container(
+      feature_count=3,
+      features=ListContainer([
+          4,  # SECURE_CLOCK
+          9,  # REVOCATION_LIST_FEATURE
+          13  # SUPPORTS_PR3_FEATURES
+      ])
+  )
+  feature_attribute = Container(
+      flags=1,
+      tag=5,
+      length=len(_BCertStructs.DrmBCertFeatureInfo.build(feature)) + 8,
+      attribute=feature
+  )
+
+
+  cert_key_sign = Container(
+      type=1,
+      length=512,  # bits
+      flags=0,
+      key=signing_key.public_bytes(),
+      usages_count=1,
+      usages=ListContainer([
+          1
+      ])
+  )
+  cert_key_encrypt = Container(
+      type=1,
+      length=512,  # bits
+      flags=0,
+      key=encryption_key.public_bytes(),
+      usages_count=1,
+      usages=ListContainer([
+          2
+      ])
+  )
+  key_info = Container(
+      key_count=2,
+      cert_keys=ListContainer([
+          cert_key_sign,
+          cert_key_encrypt
+      ])
+  )
+  key_info_attribute = Container(
+      flags=1,
+      tag=6,
+      length=len(_BCertStructs.DrmBCertKeyInfo.build(key_info)) + 8,
+      attribute=key_info
+  )
+
+
+  manufacturer_info = parent.get_certificate(0).get_attribute(7)
+
+
+  new_bcert_container = Container(
+      signature=b"CERT",
+      version=1,
+      total_length=0,  # filled at a later time
+      certificate_length=0,  # filled at a later time
+      attributes=ListContainer([
+          basic_info_attribute,
+          device_info_attribute,
+          feature_attribute,
+          key_info_attribute,
+          manufacturer_info,
+      ])
+  )
+*/
