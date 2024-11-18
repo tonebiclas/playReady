@@ -1,6 +1,7 @@
 package playReady
 
 import (
+   "crypto/ecdh"
    "encoding/binary"
    "errors"
    "log/slog"
@@ -25,17 +26,21 @@ type cert_basic_info struct {
    ClientId [16]byte
 }
 
-func NewLeafCert() error {
+func NewLeafCert(
+   cert_id, client_id [16]byte,
+   security_level uint32,
+   signing_key *ecdh.PrivateKey,
+) error {
+   basic_info := cert_basic_info{
+      CertType: 2,
+      CertId: cert_id,
+      SecurityLevel: security_level,
+      ExpirationDate: 0xFF_FF_FF_FF,
+      ClientId: client_id,
+      PublicKeyDigest: public_sha256_digest(signing_key),
+   }
+   _ = basic_info
    return nil
-   //basic_info = Container(
-   //   cert_id=cert_id,
-   //   security_level=security_level,
-   //   flags=0,
-   //   cert_type=2,
-   //   public_key_digest=signing_key.public_sha256_digest(),
-   //   expiration_date=expiry,
-   //   client_id=client_id
-   //)
    //basic_info_attribute = Container(
    //   flags=1,
    //   tag=1,
@@ -138,6 +143,44 @@ func NewLeafCert() error {
    //return cls(new_bcert_container)
 }
 
+// BCertChain = Struct(
+//    "signature" / Const(b"CHAI"),
+//    "version" / Int32ub,
+//    "total_length" / Int32ub,
+//    "flags" / Int32ub,
+//    "certificate_count" / Int32ub,
+//    "certificates" / GreedyRange(BCert)
+// )
+type bcert_chain struct {
+   header struct {
+      Signature signature
+      Version uint32
+      TotalLength uint32
+      Flags uint32
+      CertificateCount uint32
+   }
+   Certificates []bcert
+}
+
+func (b *bcert_chain) read(buf []byte) error {
+   n, err := binary.Decode(buf, binary.BigEndian, &b.header)
+   if err != nil {
+      return err
+   }
+   buf = buf[n:]
+   slog.Debug("bcert_chain", "header", b.header)
+   for range b.header.CertificateCount {
+      var cert bcert
+      n, err := cert.decode(buf)
+      if err != nil {
+         return err
+      }
+      buf = buf[n:]
+      b.Certificates = append(b.Certificates, cert)
+   }
+   return nil
+}
+
 func (b *bcert) info() (*cert_basic_info, error) {
    for _, attr := range b.Attributes {
       if attr.header.Tag == 1 {
@@ -189,44 +232,6 @@ type attribute struct {
    Attribute []byte
 }
 
-// BCertChain = Struct(
-//    "signature" / Const(b"CHAI"),
-//    "version" / Int32ub,
-//    "total_length" / Int32ub,
-//    "flags" / Int32ub,
-//    "certificate_count" / Int32ub,
-//    "certificates" / GreedyRange(BCert)
-// )
-type bcert_chain struct {
-   header struct {
-      Signature signature
-      Version uint32
-      TotalLength uint32
-      Flags uint32
-      CertificateCount uint32
-   }
-   Certificates []bcert
-}
-
-func (b *bcert_chain) read(buf []byte) error {
-   n, err := binary.Decode(buf, binary.BigEndian, &b.header)
-   if err != nil {
-      return err
-   }
-   buf = buf[n:]
-   slog.Debug("bcert_chain", "header", b.header)
-   for range b.header.CertificateCount {
-      var cert bcert
-      n, err := cert.decode(buf)
-      if err != nil {
-         return err
-      }
-      buf = buf[n:]
-      b.Certificates = append(b.Certificates, cert)
-   }
-   return nil
-}
-
 func (a *attribute) decode(buf []byte) (int, error) {
    n, err := binary.Decode(buf, binary.BigEndian, &a.header)
    if err != nil {
@@ -255,12 +260,6 @@ func (b *bcert) decode(buf []byte) (int, error) {
    return ns, nil
 }
 
-func (s signature) String() string {
-   return string(s[:])
-}
-
-type signature [4]byte
-
 // BCert = Struct(
 //    "signature" / Const(b"CERT"),
 //    "version" / Int32ub,
@@ -277,3 +276,9 @@ type bcert struct {
    }
    Attributes []attribute
 }
+
+func (s signature) String() string {
+   return string(s[:])
+}
+
+type signature [4]byte
