@@ -26,6 +26,69 @@ type cert_basic_info struct {
    ClientId [16]byte
 }
 
+// Attribute = Struct(
+//   "flags" / Int16ub,
+//   "tag" / Int16ub,
+//   "length" / Int32ub,
+//   "attribute" / Switch(
+//       lambda this_: this_.tag,
+//       {
+//           1: DrmBCertBasicInfo,
+//           2: DrmBCertDomainInfo,
+//           3: DrmBCertPCInfo,
+//           4: DrmBCertDeviceInfo,
+//           5: DrmBCertFeatureInfo,
+//           6: DrmBCertKeyInfo,
+//           7: DrmBCertManufacturerInfo,
+//           8: DrmBCertSignatureInfo,
+//           9: DrmBCertSilverlightInfo,
+//           10: DrmBCertMeteringInfo,
+//           11: DrmBCertExtDataSignKeyInfo,
+//           12: BCertExtDataContainer,
+//           13: DrmBCertExtDataSignature,
+//           14: Bytes(this.length - 8),
+//           15: DrmBCertServerInfo,
+//           16: DrmBcertSecurityVersion,
+//           17: DrmBcertSecurityVersion
+//       },
+//       default=Bytes(this.length - 8)
+//   )
+// )
+type attribute struct {
+   header struct {
+      Flags uint16
+      Tag uint16
+      Length uint32
+   }
+   Attribute []byte
+}
+
+func (c *cert_basic_info) attribute() (*attribute, error) {
+   var (
+      attr attribute
+      err error
+   )
+   attr.Attribute, err = binary.Append(nil, binary.BigEndian, c)
+   if err != nil {
+      return nil, err
+   }
+   attr.header.Flags = 1
+   attr.header.Length = uint32(binary.Size(attr.header) + len(attr.Attribute))
+   attr.header.Tag = 1
+   return &attr, nil
+}
+
+// DrmBCertDeviceInfo = Struct(
+//    "max_license" / Int32ub,
+//    "max_header" / Int32ub,
+//    "max_chain_depth" / Int32ub
+// )
+type cert_device_info struct {
+   MaxLicense uint32
+   MaxHeader uint32
+   MaxChainDepth uint32
+}
+
 func NewLeafCert(
    cert_id, client_id [16]byte,
    security_level uint32,
@@ -39,19 +102,18 @@ func NewLeafCert(
       ClientId: client_id,
       PublicKeyDigest: public_sha256_digest(signing_key),
    }
-   _ = basic_info
+   basic_info_attribute, err := basic_info.attribute()
+   if err != nil {
+      return err
+   }
+   _ = basic_info_attribute
+   device_info := cert_device_info{
+      MaxLicense: 10240,
+      MaxHeader: 15360,
+      MaxChainDepth: 2,
+   }
+   _ = device_info
    return nil
-   //basic_info_attribute = Container(
-   //   flags=1,
-   //   tag=1,
-   //   length=len(_BCertStructs.DrmBCertBasicInfo.build(basic_info)) + 8,
-   //   attribute=basic_info
-   //)
-   //device_info = Container(
-   //   max_license=max_license,
-   //   max_header=max_header,
-   //   max_chain_depth=max_chain_depth
-   //)
    //device_info_attribute = Container(
    //   flags=1,
    //   tag=4,
@@ -193,43 +255,6 @@ func (b *bcert) info() (*cert_basic_info, error) {
       }
    }
    return nil, errors.New("bcert.info")
-}
-
-// Attribute = Struct(
-//   "flags" / Int16ub,
-//   "tag" / Int16ub,
-//   "length" / Int32ub,
-//   "attribute" / Switch(
-//       lambda this_: this_.tag,
-//       {
-//           1: DrmBCertBasicInfo,
-//           2: DrmBCertDomainInfo,
-//           3: DrmBCertPCInfo,
-//           4: DrmBCertDeviceInfo,
-//           5: DrmBCertFeatureInfo,
-//           6: DrmBCertKeyInfo,
-//           7: DrmBCertManufacturerInfo,
-//           8: DrmBCertSignatureInfo,
-//           9: DrmBCertSilverlightInfo,
-//           10: DrmBCertMeteringInfo,
-//           11: DrmBCertExtDataSignKeyInfo,
-//           12: BCertExtDataContainer,
-//           13: DrmBCertExtDataSignature,
-//           14: Bytes(this.length - 8),
-//           15: DrmBCertServerInfo,
-//           16: DrmBcertSecurityVersion,
-//           17: DrmBcertSecurityVersion
-//       },
-//       default=Bytes(this.length - 8)
-//   )
-// )
-type attribute struct {
-   header struct {
-      Flags uint16
-      Tag uint16
-      Length uint32
-   }
-   Attribute []byte
 }
 
 func (a *attribute) decode(buf []byte) (int, error) {
