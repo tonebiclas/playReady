@@ -224,20 +224,20 @@ type bcert_chain struct {
    Certificates []bcert
 }
 
-func (b *bcert_chain) read(buf []byte) error {
-   n, err := binary.Decode(buf, binary.BigEndian, &b.header)
+func (b *bcert_chain) read(data []byte) error {
+   n, err := binary.Decode(data, binary.BigEndian, &b.header)
    if err != nil {
       return err
    }
-   buf = buf[n:]
+   data = data[n:]
    slog.Debug("bcert_chain", "header", b.header)
    for range b.header.CertificateCount {
       var cert bcert
-      n, err := cert.decode(buf)
+      n, err := cert.decode(data)
       if err != nil {
          return err
       }
-      buf = buf[n:]
+      data = data[n:]
       b.Certificates = append(b.Certificates, cert)
    }
    return nil
@@ -257,25 +257,25 @@ func (b *bcert) info() (*cert_basic_info, error) {
    return nil, errors.New("bcert.info")
 }
 
-func (a *attribute) decode(buf []byte) (int, error) {
-   n, err := binary.Decode(buf, binary.BigEndian, &a.header)
+func (a *attribute) decode(data []byte) (int, error) {
+   n, err := binary.Decode(data, binary.BigEndian, &a.header)
    if err != nil {
       return 0, err
    }
    slog.Debug("attribute", "header", a.header)
-   a.Attribute = buf[n:a.header.Length]
+   a.Attribute = data[n:a.header.Length]
    return n + len(a.Attribute), nil
 }
 
-func (b *bcert) decode(buf []byte) (int, error) {
-   ns, err := binary.Decode(buf, binary.BigEndian, &b.header)
+func (b *bcert) decode(data []byte) (int, error) {
+   ns, err := binary.Decode(data, binary.BigEndian, &b.header)
    if err != nil {
       return 0, err
    }
    slog.Debug("bcert", "header", b.header)
    for ns < int(b.header.TotalLength) {
       var attr attribute
-      n, err := attr.decode(buf[ns:])
+      n, err := attr.decode(data[ns:])
       if err != nil {
          return 0, err
       }
