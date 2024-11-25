@@ -19,3 +19,13 @@ all the public devices are revoked, this repo will no longer work
 
 I am offering bounty of 1,000 USD for information regarding methods to dump
 devices
+
+## contact
+
+<dl>
+   <dt>email</dt>
+      <dd>srpen6@gmail.com</dd>
+   <dt>Discord</dt>
+      <dd>srpen6</dd>
+      <dd>https://discord.com/invite/rMFzDRQhSx</dd>
+</dl>
