@@ -25,7 +25,6 @@ version code = 388000545
 works:
 
 ~~~
-com.amazon.avod.thirdpartyclient-388000545> rg -a CHAI\b
 lib\armeabi-v7a\libAIVPlayReadyLicensing.so
 �r5�&wv���|(ʖDG�gF37B��ʾ���l�]�R�7yޙ������?��%o�.@@�J      �����S/Eι�d�U���f���\�`&BR�~ױ�@8���+?�^lǰ�=g�y�3
 . h|.f}'w�@ޠW�`�Lm嗲�{�        y������q7     ��<��O����R�o�'K`��xQ~h��� ����r�_�|��8ee����:U��+��~�(8j���S3�;}��>��B&�)�V�����6�0��N�U�"��X7CHAI\CERT�,X�LA������4���/��Ч?eۦ�oF�4�EjTO��,�G�:O�y�������`5,��������_��^�_��(��3�
@@ -385,6 +384,13 @@ version code = 1301042
 ~~~
 
 no TV app
+
+## skyshowtime
+
+fail:
+
+- https://apkmirror.com/apk/skyshowtime/skyshowtime
+- https://apkmirror.com/apk/skyshowtime/skyshowtime-android-tv
 
 ## tubitv
 
