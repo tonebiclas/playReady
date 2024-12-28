@@ -1,33 +1,30 @@
-package main
+package playReady
 
 import (
-   "bytes"
    "encoding/binary"
-   "fmt"
-   "os"
+   "strconv"
 )
 
+func (p *prkb) String() string {
+   b := []byte("qwFormatIdentifier = ")
+   b = strconv.AppendQuote(b, string(p.qwFormatIdentifier[:]))
+   b = append(b, "\ndwFormatVersion = "...)
+   b = strconv.AppendUint(b, uint64(p.dwFormatVersion), 10)
+   b = append(b, "\nc = "...)
+   b = strconv.AppendQuote(b, string(p.c))
+   return string(b)
+}
+
 type prkb struct {
-   a [4]byte
-   b uint32
+   qwFormatIdentifier [4]byte
+   dwFormatVersion uint32
    c []byte
 }
 
 func (p *prkb) decode(data []byte) {
-   copy(p.a[:], data)
+   copy(p.qwFormatIdentifier[:], data)
    data = data[4:]
-   p.b = binary.BigEndian.Uint32(data)
+   p.dwFormatVersion = binary.BigEndian.Uint32(data)
    data = data[4:]
-   p.c = data[:p.b]
-}
-
-func main() {
-   data, err := os.ReadFile("ignore/playready-4.0.hds")
-   if err != nil {
-      panic(err)
-   }
-   _, data, _ = bytes.Cut(data, []byte("PRKB"))
-   var play prkb
-   play.decode(data)
-   fmt.Printf("%+v\n", play)
+   p.c = data[:p.dwFormatVersion]
 }
