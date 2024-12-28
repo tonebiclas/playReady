@@ -28,3 +28,27 @@ sec2\src\pr\v0404\inc\drmcompiler.h
 ~~~
 
 `DRM_XB_HEADER_DESCRIPTION` definition:
+
+~~~
+sec2\src\pr\v0404\inc\drmxb.h
+typedef struct __tagDRM_XB_HEADER_DESCRIPTION
+{
+   XB_FORMAT_ID_LENGTH             eFormatIdLength;
+   
+   /* 4 or 8 byte string identifier.  Use XB_DEFINE_DWORD_FORMAT_ID or XB_DEFINE_QWORD_FORMAT_ID to create this value */
+   DRM_UINT64                      qwFormatIdentifier;
+   
+   /* Version supported by this description */
+   DRM_DWORD                       dwFormatVersion;  
+   
+   /* Byte alignment identifier.  Must be a non-zero, 4^x value (e.g. 1, 4, 8, 16, etc). */
+   DRM_XB_ALIGNMENT                eAlign;  
+   
+   /* Where in the containing structure should the data be serialized from/to */
+   DRM_WORD                        wOffsetOfSizeInHeaderStruct;   
+   
+   /* The header can have optional extra data -- but only 1 */
+   const DRM_XB_ENTRY_DESCRIPTION *pEntryDescription;     
+   
+} DRM_XB_HEADER_DESCRIPTION;
+~~~
