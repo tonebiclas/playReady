@@ -24,8 +24,9 @@ devices
 
 <dl>
    <dt>email</dt>
-      <dd>srpen6@gmail.com</dd>
-   <dt>Discord</dt>
-      <dd>srpen6</dd>
+      <dd>spen@protonmail.com</dd>
+   <dt>Discord username</dt>
+      <dd>10308</dd>
+   <dt>Discord invite</dt>
       <dd>https://discord.com/invite/rMFzDRQhSx</dd>
 </dl>
