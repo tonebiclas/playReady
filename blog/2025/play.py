@@ -1,7 +1,7 @@
 # C:\Program Files (x86)\Amlogic\Aml_Burn_Tool\V2\license
 # bgroupcert.dat
-# playReadyKeyBox.bin
 # zgpriv.dat
+# playReadyKeyBox.bin
 
 import ctypes
 
