@@ -13,3 +13,5 @@ cert = ctypes.CDLL(
 generate = cert['_PR_GeneratePlayReaykeybox@0']
 
 generate()
+
+# ida90sp1\portable\windows\idapro.hexlic
