@@ -17,9 +17,6 @@ https://wikipedia.org/wiki/PlayReady
 currently no public method exists to dump/extract a playready device, so once
 all the public devices are revoked, this repo will no longer work
 
-I am offering bounty of 1,000 USD for information regarding methods to dump
-devices
-
 ## contact
 
 <dl>
